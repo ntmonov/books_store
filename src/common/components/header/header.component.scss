@@ -1,0 +1,16 @@
+header {
+  height: 50px;
+  width: 100%;
+  ul {
+    list-style-type: none;
+    display: flex;
+    gap: 16px;
+
+    li {
+      padding: 8px;
+      background-color: teal;
+      color: white;
+      cursor: pointer;
+    }
+  }
+}
