@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, UserCredential } from '@angular/fire/auth';
+import { Injectable, signal, Signal } from '@angular/core';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, UserCredential, signOut } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  user = signal<UserCredential | null>(null);
 
   constructor(private auth: Auth) { }
 
@@ -12,7 +13,12 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  register(email: string, password: string): Promise<UserCredential> {
-    return createUserWithEmailAndPassword(this.auth, email, password);
+  async register(email: string, password: string): Promise<void> {
+    const user = await createUserWithEmailAndPassword(this.auth, email, password);
+    this.user.set(user);
+  }
+
+  logout(): Promise<void> {
+    return signOut(this.auth);
   }
 }

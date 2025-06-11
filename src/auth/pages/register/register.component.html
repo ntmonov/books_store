@@ -12,7 +12,12 @@
             <label for="exampleInputPassword1" class="form-label">Password</label>
             <input [formControlName]="'password'" type="password" class="form-control" id="exampleInputPassword1">
           </div>
-          <button type="submit" class="btn btn-primary" (click)="submit($event)">Submit</button>
+          <button type="submit" class="btn btn-primary" (click)="submit()">Submit</button>
+          @if (errorMessage) {
+            <div class="mt-3  alert alert-danger" role="alert">
+              {{ errorMessage }}
+            </div>
+          }
         </form>
       </div>
     </div>

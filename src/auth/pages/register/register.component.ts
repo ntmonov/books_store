@@ -16,6 +16,7 @@ type RegisterForm = {
 })
 export class RegisterComponent {
   registerForm: FormGroup<RegisterForm>;
+  errorMessage: string;
 
   constructor(
     private fb: FormBuilder,
@@ -24,14 +25,19 @@ export class RegisterComponent {
     this.registerForm = this.fb.group({
       email: this.fb.control('', {nonNullable: true}),
       password: this.fb.control('', {nonNullable: true})
-    })
+    });
+    this.errorMessage = '';
   }
 
-  submit(event: Event) {
-    event.preventDefault();
-    this.authService.register(
-      this.registerForm.value.email!,
-      this.registerForm.value.password!
-    )
+  async submit() {
+    this.errorMessage = '';
+    try {
+      await this.authService.register(
+        this.registerForm.value.email!,
+        this.registerForm.value.password!
+      );
+    } catch (err: any) {
+      this.errorMessage = err.message;
+    }
   }
 }
