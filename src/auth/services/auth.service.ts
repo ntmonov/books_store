@@ -1,24 +1,32 @@
-import { Injectable, signal, Signal } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, UserCredential, signOut } from '@angular/fire/auth';
+import { Injectable } from '@angular/core';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, user, User, updateProfile } from '@angular/fire/auth';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  user = signal<UserCredential | null>(null);
+  user$: Observable<User | null>;
 
-  constructor(private auth: Auth) { }
-
-  login(email: string, password: string): Promise<UserCredential> {
-    return signInWithEmailAndPassword(this.auth, email, password);
+  constructor(private auth: Auth) {
+    this.user$ = user(this.auth);
   }
 
-  async register(email: string, password: string): Promise<void> {
+  async login(email: string, password: string): Promise<void> {
+    const user = await signInWithEmailAndPassword(this.auth, email, password);
+
+
+  }
+
+  async register(email: string, password: string, username: string): Promise<void> {
     const user = await createUserWithEmailAndPassword(this.auth, email, password);
-    this.user.set(user);
+
+    if (user.user) {
+      await updateProfile(user.user, {displayName: username});
+    }
   }
 
-  logout(): Promise<void> {
-    return signOut(this.auth);
+  async logout(): Promise<void> {
+    await signOut(this.auth);
   }
 }

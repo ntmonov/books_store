@@ -1,11 +1,11 @@
-import { ApplicationConfig, EnvironmentProviders, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { initializeAuth, browserSessionPersistence, browserPopupRedirectResolver, provideAuth } from '@angular/fire/auth';
+import { initializeAuth, browserSessionPersistence, browserPopupRedirectResolver, provideAuth, inMemoryPersistence } from '@angular/fire/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCoQ9hiP5OgTf1jj0VEpIMU_t_imolppyQ",
@@ -17,10 +17,18 @@ const firebaseConfig = {
 };
 
 const fbApp = () => initializeApp(firebaseConfig);
-const authApp = () => initializeAuth(fbApp(), {
-  persistence: browserSessionPersistence,
-  popupRedirectResolver: browserPopupRedirectResolver
-});
+const authApp = () => initializeAuth(fbApp(),
+  {
+    persistence:
+      typeof window === 'undefined' ?
+        inMemoryPersistence :
+        [browserSessionPersistence]
+  })
+
+// {
+//   persistence: browserSessionPersistence,
+//   popupRedirectResolver: browserPopupRedirectResolver
+// });
 
 const firebaseProviders = [
   provideFirebaseApp(fbApp),
