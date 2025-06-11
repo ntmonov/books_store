@@ -52,7 +52,7 @@ export class RegisterComponent {
     return (group: AbstractControl): ValidationErrors | null => {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirm_password')?.value;
-    return password === confirmPassword ? null : { passwordsMismatch: true };
+    return password && confirmPassword && password === confirmPassword ? null : { passwordsMismatch: true };
   };
   };
 }
