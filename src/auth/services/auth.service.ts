@@ -14,8 +14,6 @@ export class AuthService {
 
   async login(email: string, password: string): Promise<void> {
     const user = await signInWithEmailAndPassword(this.auth, email, password);
-
-
   }
 
   async register(email: string, password: string, username: string): Promise<void> {
