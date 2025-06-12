@@ -1,7 +1,9 @@
 <header>
   <ul>
-    <li [routerLink]="'/login'">Login</li>
-    <li [routerLink]="'/register'">Register</li>
+    @if (!(getUser() | async)) {
+      <li [routerLink]="'/login'">Login</li>
+      <li [routerLink]="'/register'">Register</li>
+    }
     @if (getUser() | async; as user) {
       <li (click)="logout()">Logout {{ user.displayName }}</li>
     }

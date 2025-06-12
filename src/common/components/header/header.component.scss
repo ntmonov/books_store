@@ -1,17 +1,21 @@
 header {
-  height: 50px;
+  height: 80px;
   width: 100%;
+  background-color: #CCC;
   ul {
     list-style-type: none;
     display: flex;
     gap: 16px;
     padding-left: 0;
+    align-items: center;
+    height: 100%;
 
     li {
       padding: 8px;
       background-color: teal;
       color: white;
       cursor: pointer;
+      border-radius: 8px;
     }
   }
 }

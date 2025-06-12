@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 type LoginForm = {
   email: FormControl<string>;
@@ -20,7 +21,8 @@ registerForm: FormGroup<LoginForm>;
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.registerForm = this.fb.group({
       email: this.fb.control('', {nonNullable: true}),
@@ -36,6 +38,8 @@ registerForm: FormGroup<LoginForm>;
         this.registerForm.value.email!,
         this.registerForm.value.password!
       );
+
+      this.router.navigate(['/']);
     } catch (err: any) {
       this.errorMessage = err.message;
     }
