@@ -18,4 +18,14 @@ export class BookService {
     const booksRef = collection(this.firestore, 'books');
     return collectionData(booksRef, { idField: 'id' }) as Observable<Book[]>;
   }
+
+  getBook(id: string) {
+    const bookDoc = doc(this.firestore, `books/${id}`);
+    return docData(bookDoc, { idField: 'id' }) as Observable<Book | undefined>;
+  }
+
+  async updateBook(book: Book) {
+    const bookDoc = doc(this.firestore, `books/${book.id}`);
+    await updateDoc(bookDoc, book);
+  }
 }
