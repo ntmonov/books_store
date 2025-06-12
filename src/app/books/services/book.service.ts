@@ -19,7 +19,7 @@ export class BookService {
     return collectionData(booksRef, { idField: 'id' }) as Observable<Book[]>;
   }
 
-  getBook(id: string) {
+  getBook(id: string): Observable<Book | undefined> {
     const bookDoc = doc(this.firestore, `books/${id}`);
     return docData(bookDoc, { idField: 'id' }) as Observable<Book | undefined>;
   }
