@@ -25,6 +25,10 @@ export const routes: Routes = [
       {
         path: 'add',
         loadComponent: () => import('./books/pages/add-book/add-book.component').then(c => c.AddBookComponent)
+      },
+      {
+        path: 'list',
+        loadComponent: () => import('./books/pages/list-books/list-books.component').then(c => c.ListBooksComponent)
       }
     ]
   }
