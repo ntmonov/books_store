@@ -6,6 +6,7 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { initializeAuth, browserSessionPersistence, browserPopupRedirectResolver, provideAuth, inMemoryPersistence } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCoQ9hiP5OgTf1jj0VEpIMU_t_imolppyQ",
@@ -33,6 +34,7 @@ const authApp = () => initializeAuth(fbApp(),
 const firebaseProviders = [
   provideFirebaseApp(fbApp),
   provideAuth(authApp),
+  provideFirestore(() => getFirestore())
 ];
 
 export const appConfig: ApplicationConfig = {
