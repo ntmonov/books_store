@@ -3,7 +3,7 @@
 
 @if (getUser() | async) {
   <div class="mt-5 home-actions">
-    <a class="btn btn-primary" [routerLink]="'/books/add'">Create new book</a>
+    <a class="btn btn-primary" style="margin-right: 8px;" [routerLink]="'/books/add'">Create new book</a>
     <a class="btn btn-primary" [routerLink]="'/books/list'">Go to Library</a>
   </div>
 }
